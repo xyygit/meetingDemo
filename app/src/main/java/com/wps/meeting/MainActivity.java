@@ -1,15 +1,14 @@
 package com.wps.meeting;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.wps.meeting.webview.WebViewFragment;
-import com.wps.meeting.webview.autoservice.IWebViewService;
-import com.wps.meeting.webview.autoservice.MeetingServiceLoader;
+import com.wps.meeting.recylerview.RecyclerTestActivity;
+import com.wps.meeting.recylerview.TestRecyclerAdapter;
+import com.wps.meeting.webview.WebActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,16 +16,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        IWebViewService webviewService = MeetingServiceLoader.load(IWebViewService.class);
-        Fragment fragment;
-        if (webviewService != null) {
-            fragment = webviewService.getWebViewFragment("https://www.baidu.com", true, "百度");
-        } else {
-            fragment = WebViewFragment.newInstance("https://www.baidu.com", true, "百度");
-        }
-        transaction.replace(R.id.web_view_fragment, fragment).commit();
+    public void testWeb(View view) {
+        startClass(WebActivity.class);
+    }
+
+    public void testRecyclerView(View view) {
+        startClass(RecyclerTestActivity.class);
+    }
+
+    private void startClass(Class cls) {
+        startActivity(new Intent(this, cls));
     }
 }
